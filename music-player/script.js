@@ -1,7 +1,9 @@
-const musicContainer = document.querySelector(".music-container");
+const musicContainer = document.getElementById("music-container");
 
-const progress = document.querySelector(".progress");
-const progressContainer = document.querySelector(".progress-container");
+const progress = document.getElementById("progress");
+const progressContainer = document.getElementById("progress-container");
+const currTime = document.getElementById("current-time");
+const totTime = document.getElementById("total-time");
 
 const playBtn = document.getElementById("play");
 const prevBtn = document.getElementById("prev");
@@ -65,6 +67,21 @@ function updateProgress(e) {
    const { duration, currentTime } = e.srcElement;
    const progressPercent = (currentTime / duration) * 100;
    progress.style.width = `${progressPercent}%`;
+   currTime.innerText = formatTime(Math.floor(currentTime));
+   if (isNaN(duration)) {
+      totTime.innerText = "0:00";
+   } else {
+      totTime.innerText = formatTime(Math.floor(duration));
+   }
+}
+
+function formatTime(seconds) {
+   let min = Math.floor(seconds / 60);
+   let sec = Math.floor(seconds - 60 * min);
+   if (sec < 10) {
+      sec = `0${sec}`;
+   }
+   return `${min}:${sec}`;
 }
 
 function setProgress(e) {

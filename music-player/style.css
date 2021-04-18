@@ -168,6 +168,23 @@ h1 {
    transition: width 0.1s linear;
 }
 
+/** show playback time  */
+.time-container {
+	display: flex;
+	justify-content: space-between;
+	font-size:12px;
+	font-weight: 600;
+	color: #cdc2d0;
+   cursor: default;
+}
+
+#current-time,
+#total-time {
+	background-color: #fff;
+	padding: 1.5px 3px;
+	border-radius: 5px; 
+}
+
 /** Other Bg-img options  */
 /*(blue->white) background-image: linear-gradient(to top, #f0f2f0, #000c40); */
 /*(jaipur) background-image: linear-gradient(to top, #dbe6f6, #c5796d);    */
