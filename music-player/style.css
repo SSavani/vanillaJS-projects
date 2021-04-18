@@ -81,6 +81,14 @@ h1 {
    z-index: 1;
 }
 
+.controls {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   z-index: 1;
+}
+
 .action-btn {
    background-color: #fff;
    border: none;
@@ -90,23 +98,6 @@ h1 {
    margin: 0 20px;
    font-size: 25px;
    cursor: pointer;
-}
-
-.action-btn:hover {
-   color: #cdc2d0;
-}
-
-.action-btn-big {
-   color: #cdc2d0;
-   font-size: 35px;
-}
-
-.controls {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   z-index: 1;
 }
 
 .action-btn.list {
@@ -119,6 +110,7 @@ h1 {
    font-size: 20px;
    cursor: pointer;
 }
+
 .action-btn.volume {
    background-color: #fff;
    border: none;
@@ -128,6 +120,15 @@ h1 {
    margin: 0 0 5px 5px;
    font-size: 20px;
    cursor: pointer;
+}
+
+.action-btn:hover {
+   color: #cdc2d0;
+}
+
+.action-btn-big {
+   color: #cdc2d0;
+   font-size: 35px;
 }
 
 .music-info {
