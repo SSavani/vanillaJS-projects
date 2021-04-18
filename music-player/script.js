@@ -8,10 +8,13 @@ const totTime = document.getElementById("total-time");
 const playBtn = document.getElementById("play");
 const prevBtn = document.getElementById("prev");
 const nextBtn = document.getElementById("next");
+const playlistBtn = document.getElementById("list");
 
 const audio = document.getElementById("audio");
 const title = document.getElementById("title");
 const cover = document.getElementById("cover");
+const playlistContainer = document.getElementById("playlist-container");
+const playlist = document.getElementById("playlist");
 
 //* Song Titles
 const songs = ["anewbeginning", "littleidea", "happyrock"];
@@ -19,14 +22,26 @@ const songs = ["anewbeginning", "littleidea", "happyrock"];
 //* Keep track of songs
 let songIdx = 0;
 
-//* Initially load song in DOM
+//* Initially load song & playlist in DOM
 loadSong(songs[songIdx]);
+loadPlaylist();
 
 //* Update song details
 function loadSong(song) {
    title.innerText = song;
    audio.src = `music/${song}.mp3`;
    cover.src = `images/${song}.jpg`;
+}
+
+//* Load Playlist
+function loadPlaylist() {
+   for (let i = 0; i < songs.length; i++) {
+      listItem = document.createElement("li");
+      listItem.classList.add("list-item");
+      listItem.innerHTML = songs[i];
+      listItem.setAttribute("style", "background-image:url(images/" + songs[i] + ".jpg)");
+      playlist.appendChild(listItem);
+   }
 }
 
 function playSong() {
@@ -92,6 +107,21 @@ function setProgress(e) {
    audio.currentTime = (clickX / width) * duration;
 }
 
+//* Show/Hide playlist when clicked
+function showPlaylist() {
+   if (playlistContainer.classList.contains("open")) {
+      playlistContainer.classList.remove("open");
+      playlistBtn.querySelector("i").classList.remove("fas");
+      playlistBtn.querySelector("i").classList.add("far");
+      // unloadPlaylist();
+   } else {
+      // loadPlaylist();
+      playlistContainer.classList.add("open");
+      playlistBtn.querySelector("i").classList.remove("far");
+      playlistBtn.querySelector("i").classList.add("fas");
+   }
+}
+
 //* Play/Pause Song Events
 playBtn.addEventListener("click", () => {
    const isPlaying = musicContainer.classList.contains("play");
@@ -115,3 +145,34 @@ progressContainer.addEventListener("click", setProgress);
 
 //* To play next song when current song completes
 audio.addEventListener("ended", nextSong);
+
+//* Toggle Playlist
+playlistBtn.addEventListener("click", showPlaylist);
+
+//* PlayList Items' Click Events
+var playlistItems = document.getElementsByClassName("list-item");
+console.log(playlistItems);
+for (let i = 0; i < playlistItems.length; i++) {
+   playlistItems[i].addEventListener("click", getClickedItem.bind(this));
+}
+
+function getClickedItem(e) {
+   console.log("Start");
+   for (let i = 0; i < playlistItems.length; i++) {
+      if (e.target === playlistItems[i]) {
+         var idx = e.target.innerText.toLowerCase();
+         if (idx == songs[songIdx]) {
+            const isPlaying = musicContainer.classList.contains("play");
+            if (isPlaying) {
+               pauseSong();
+            } else {
+               playSong();
+            }
+         } else {
+            songIdx = songs.indexOf(idx);
+            loadSong(idx);
+            playSong();
+         }
+      }
+   }
+}
