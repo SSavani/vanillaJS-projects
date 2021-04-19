@@ -1,20 +1,25 @@
 const musicContainer = document.getElementById("music-container");
+const progressContainer = document.getElementById("progress-container");
+const playlistContainer = document.getElementById("playlist-container");
+const volumeContainer = document.getElementById("volume-container");
 
 const progress = document.getElementById("progress");
-const progressContainer = document.getElementById("progress-container");
+const playlist = document.getElementById("playlist");
+const volumeRange = document.getElementById("volume-range");
+const volume = document.getElementById("volume");
+
 const currTime = document.getElementById("current-time");
 const totTime = document.getElementById("total-time");
 
-const playBtn = document.getElementById("play");
-const prevBtn = document.getElementById("prev");
-const nextBtn = document.getElementById("next");
-const playlistBtn = document.getElementById("list");
+const playBtn = document.getElementById("play-btn");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const playlistBtn = document.getElementById("playlist-btn");
+const volumeBtn = document.getElementById("volume-btn");
 
 const audio = document.getElementById("audio");
 const title = document.getElementById("title");
 const cover = document.getElementById("cover");
-const playlistContainer = document.getElementById("playlist-container");
-const playlist = document.getElementById("playlist");
 
 //* Song Titles
 const songs = ["anewbeginning", "littleidea", "happyrock"];
@@ -25,6 +30,7 @@ let songIdx = 0;
 //* Initially load song & playlist in DOM
 loadSong(songs[songIdx]);
 loadPlaylist();
+loadVolume();
 
 //* Update song details
 function loadSong(song) {
@@ -36,12 +42,17 @@ function loadSong(song) {
 //* Load Playlist
 function loadPlaylist() {
    for (let i = 0; i < songs.length; i++) {
-      listItem = document.createElement("li");
-      listItem.classList.add("list-item");
-      listItem.innerHTML = songs[i];
-      listItem.setAttribute("style", "background-image:url(images/" + songs[i] + ".jpg)");
-      playlist.appendChild(listItem);
+      let playlistItem = document.createElement("li");
+      playlistItem.classList.add("playlist-item");
+      playlistItem.innerHTML = songs[i];
+      playlistItem.setAttribute("style", "background-image:url(images/" + songs[i] + ".jpg)");
+      playlist.appendChild(playlistItem);
    }
+}
+
+//* Set Initial Volume
+function loadVolume() {
+   audio.volume = 0.9;
 }
 
 function playSong() {
@@ -122,6 +133,63 @@ function showPlaylist() {
    }
 }
 
+function playClickedItem(e) {
+   console.log("Start");
+   for (let i = 0; i < playlistItems.length; i++) {
+      if (e.target === playlistItems[i]) {
+         var idx = e.target.innerText.toLowerCase();
+         if (idx == songs[songIdx]) {
+            const isPlaying = musicContainer.classList.contains("play");
+            if (isPlaying) {
+               pauseSong();
+            } else {
+               playSong();
+            }
+         } else {
+            songIdx = songs.indexOf(idx);
+            loadSong(idx);
+            playSong();
+         }
+      }
+   }
+}
+
+//* Show/Hide Volume Bar when clicked
+function showVolume() {
+   if (volumeContainer.classList.contains("open")) {
+      volumeContainer.classList.remove("open");
+      volumeBtn.classList.remove("active");
+   } else {
+      volumeContainer.classList.add("open");
+      volumeBtn.classList.add("active");
+   }
+}
+
+//* Change Volume
+function setVolume(e) {
+   let height = this.clientHeight - 1;
+   let clickY = e.offsetY;
+   let vol = 1 - clickY / height;
+   if (vol > 0.5) {
+      volumeBtn.querySelector("i.fas").classList.add("fa-volume-up");
+   }
+   if (vol < 0.5 && vol > 0.01) {
+      volumeBtn.querySelector("i.fas").classList.remove("fa-volume-up");
+      volumeBtn.querySelector("i.fas").classList.remove("fa-volume-off");
+      volumeBtn.querySelector("i.fas").classList.add("fa-volume-down");
+   } else if (vol < 0.1) {
+      volumeBtn.querySelector("i.fas").classList.remove("fa-volume-up");
+      volumeBtn.querySelector("i.fas").classList.add("fa-volume-off");
+   }
+   if (vol < 0.0) {
+      vol = 0;
+   }
+   if (vol > 1.0) {
+      vol = 1.0;
+   }
+   audio.volume = vol;
+}
+
 //* Play/Pause Song Events
 playBtn.addEventListener("click", () => {
    const isPlaying = musicContainer.classList.contains("play");
@@ -150,29 +218,18 @@ audio.addEventListener("ended", nextSong);
 playlistBtn.addEventListener("click", showPlaylist);
 
 //* PlayList Items' Click Events
-var playlistItems = document.getElementsByClassName("list-item");
+var playlistItems = document.getElementsByClassName("playlist-item");
 console.log(playlistItems);
 for (let i = 0; i < playlistItems.length; i++) {
-   playlistItems[i].addEventListener("click", getClickedItem.bind(this));
+   playlistItems[i].addEventListener("click", playClickedItem.bind(this));
 }
 
-function getClickedItem(e) {
-   console.log("Start");
-   for (let i = 0; i < playlistItems.length; i++) {
-      if (e.target === playlistItems[i]) {
-         var idx = e.target.innerText.toLowerCase();
-         if (idx == songs[songIdx]) {
-            const isPlaying = musicContainer.classList.contains("play");
-            if (isPlaying) {
-               pauseSong();
-            } else {
-               playSong();
-            }
-         } else {
-            songIdx = songs.indexOf(idx);
-            loadSong(idx);
-            playSong();
-         }
-      }
-   }
-}
+//* Volume Control Events
+volumeBtn.addEventListener("click", showVolume);
+volumeRange.addEventListener("click", setVolume);
+
+audio.onvolumechange = (e) => {
+   let currVol = e.srcElement.volume;
+   let volPercent = currVol * 100;
+   volume.style.height = `${volPercent}%`;
+};

@@ -31,24 +31,31 @@
       </div>
 
       <div class="navigation">
-         <button id="prev" class="action-btn">
+         <button id="prev-btn" class="action-btn">
             <i class="fas fa-backward"></i>
          </button>
-         <button id="play" class="action-btn action-btn-big">
+         <button id="play-btn" class="action-btn action-btn-big">
             <i class="fas fa-play"></i>
          </button>
-         <button id="next" class="action-btn">
+         <button id="next-btn" class="action-btn">
             <i class="fas fa-forward"></i>
          </button>
       </div>
 
       <div class="controls">
-         <button id="volume" class="action-btn volume">
+         <button id="volume-btn" class="action-btn volume-btn">
             <i class="fas fa-volume-up"></i>
          </button>
-         <button id="list" class="action-btn list">
-            <i class="far fa-list-alt"></i>
-         </button>
+         <div class="volume-container" id="volume-container">
+            <div class="volume-range" id="volume-range">
+               <div class="volume" id="volume"></div>
+            </div>
+         </div>
+         <div class="playlist-btn-container">
+            <button id="playlist-btn" class="action-btn list">
+               <i class="far fa-list-alt"></i>
+            </button>
+         </div>
       </div>
 
       <div class="playlist-container" id="playlist-container">
