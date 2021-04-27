@@ -2,6 +2,8 @@
 
 Create a music player UI to play songs stored in the "music" folder using CSS / JS / HTML5 audio API.
 
+![Music Player](./images/screenshot.png)
+
 Inspired by -> Brad Traversy: <https://youtu.be/QTHRWGn_sJw>
 
 ## Project Specifications
@@ -12,3 +14,10 @@ Inspired by -> Brad Traversy: <https://youtu.be/QTHRWGn_sJw>
 - Add play and pause functionality
 - Switch songs
 - Progress bar
+
+## Features Added
+
+- Show playback time with the progress bar
+- Adjust Volume
+- Show/Hide playlist
+  - User can click the song from playlist to play/pause
