@@ -15,7 +15,7 @@ Inspired by -> Brad Traversy: <https://youtu.be/QTHRWGn_sJw>
 - Switch songs
 - Progress bar
 
-## Features Added
+## Extra Features Added
 
 - Show playback time with the progress bar
 - Adjust Volume
