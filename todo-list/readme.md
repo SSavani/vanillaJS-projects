@@ -2,7 +2,7 @@
 
 A simple To-Do list made using JavaScript , HTML & Bootstrap.
 
-![To-Do List](./images/screenshot.png "To-Do List")
+![To-Do List](./images/screenshot.PNG "To-Do List")
 
 ## Features
 

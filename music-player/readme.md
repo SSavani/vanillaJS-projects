@@ -2,7 +2,7 @@
 
 Create a music player UI to play songs stored in the "music" folder using CSS / JS / HTML5 audio API.
 
-![Music Player](./images/screenshot.png)
+![Music Player](./images/screenshot.PNG "Music Player")
 
 Inspired by -> Brad Traversy: <https://youtu.be/QTHRWGn_sJw>
 
